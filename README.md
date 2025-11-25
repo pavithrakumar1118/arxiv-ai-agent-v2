@@ -137,7 +137,7 @@ streamlit run app.py
 
 Your browser opens automatically.
 
-## 🔌 Choosing a Provider (Sidebar)
+## 🔌 Choosing a Provider 
 
 ### Option A — OpenAI
 

@@ -159,6 +159,7 @@ def fetch_arxiv_papers_by_date(
     base_url = "https://export.arxiv.org/api/query"
 
     results: List[Paper] = []
+    seen_ids = set()  # Track arXiv IDs to avoid duplicates across batches
     start_index = 0
 
     for _ in range(max_batches):
@@ -220,6 +221,12 @@ def fetch_arxiv_papers_by_date(
             if published_date < start_date:
                 return results
 
+            # Extract arXiv ID early and deduplicate across all batches
+            arxiv_id = entry.get("id", "").split("/")[-1]
+            if arxiv_id in seen_ids:
+                continue
+            seen_ids.add(arxiv_id)
+
             authors = [a.name for a in entry.authors] if "authors" in entry else []
             email_domains: List[str] = []
 
@@ -230,8 +237,6 @@ def fetch_arxiv_papers_by_date(
                     arxiv_url = link.href
                 if getattr(link, "title", "") == "pdf":
                     pdf_url = link.href
-
-            arxiv_id = entry.get("id", "").split("/")[-1]
 
             paper = Paper(
                 arxiv_id=arxiv_id,
