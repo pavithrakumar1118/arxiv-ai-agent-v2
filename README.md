@@ -35,6 +35,10 @@ Filter papers by publication venue without losing semantic quality:
 - **Specific Selection:** Pick individual top-tier venues like **NeurIPS, CVPR, ICML, Nature, or Science**
 - **Smart Pipeline:** The agent performs semantic search on all papers first to understand the landscape, and then applies your venue filter. This ensures the AI sees the full context of related work before narrowing down.
 
+### 🧭 arXiv Category & Subcategory Filtering
+
+You can now filter arXiv fetches by a main category and one or more subcategories. In the current UI the only available main category is **Computer Science** (papers with `cs.*` tags). Use subcategories such as `cs.AI`, `cs.LG`, and `cs.HC` to narrow the search to specific areas within Computer Science.
+
 ### 🛡️ Robust arXiv Fetching
 
 - Improved rate-limiting logic to strictly adhere to arXiv's API policies

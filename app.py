@@ -211,13 +211,13 @@ ARXIV_CATEGORIES: Dict[str, List[str]] = {
         "cs.AI", "cs.LG", "cs.HC", "cs.CL", "cs.CV", "cs.RO", "cs.IR", "cs.NE", "cs.SE",
         "cs.CR", "cs.DS", "cs.DB", "cs.SI", "cs.MM", "cs.IT", "cs.PF", "cs.MA",
     ],
-    "Statistics": ["stat.ML", "stat.AP", "stat.CO", "stat.TH"],
-    "Mathematics": ["math.OC", "math.ST", "math.IT", "math.PR", "math.NA"],
-    "Physics": ["physics.comp-ph", "physics.data-an", "physics.soc-ph", "physics.optics"],
-    "Quantitative Biology": ["q-bio.QM", "q-bio.NC", "q-bio.BM"],
-    "Quantitative Finance": ["q-fin.MF", "q-fin.ST", "q-fin.CP", "q-fin.TR"],
-    "Electrical Engineering and Systems Science": ["eess.IV", "eess.SP", "eess.SY", "eess.AS"],
-    "Economics": ["econ.EM", "econ.TH"],
+    # "Statistics": ["stat.ML", "stat.AP", "stat.CO", "stat.TH"],
+    # "Mathematics": ["math.OC", "math.ST", "math.IT", "math.PR", "math.NA"],
+    # "Physics": ["physics.comp-ph", "physics.data-an", "physics.soc-ph", "physics.optics"],
+    # "Quantitative Biology": ["q-bio.QM", "q-bio.NC", "q-bio.BM"],
+    # "Quantitative Finance": ["q-fin.MF", "q-fin.ST", "q-fin.CP", "q-fin.TR"],
+    # "Electrical Engineering and Systems Science": ["eess.IV", "eess.SP", "eess.SY", "eess.AS"],
+    # "Economics": ["econ.EM", "econ.TH"],
 }
 
 def extract_venue(comment: str) -> Optional[str]:
@@ -796,11 +796,11 @@ def summarize_paper_plain_english(paper: Paper, llm_config: LLMConfig) -> str:
 PIPELINE_DESCRIPTION_MD = """
 #### 1. Describe what you want
 
-You write a short research brief in natural language about the kind of work you care about, and optionally what you are not interested in. If you leave both fields empty, the agent switches to a global mode and just looks for the most impactful recent cs.AI, cs.LG, and cs.HC papers overall.
+You write a short research brief in natural language about the kind of work you care about, and optionally what you are not interested in. If you leave both fields empty, the agent switches to a global mode and just looks for the most impactful recent Computer Science papers overall.
 
 #### 2. The agent fetches recent arXiv papers
 
-It fetches up to about 5000 papers from arxiv.org for the date range you choose, using your selected arXiv category filters—either all categories, or a specific main category (like Computer Science, Statistics, Physics) with one or more subcategories (like cs.AI, stat.ML, etc.). It does this carefully, respecting arXiv’s API rate limits.
+It fetches up to about 5000 papers from arxiv.org for the date range you choose, using your selected arXiv category filters—either all categories, or a specific main category (like Computer Science) with one or more subcategories (like cs.AI, cs.LG etc.). It does this carefully, respecting arXiv’s API rate limits.
 #### 3. The agent picks candidate papers
 
 - In **targeted mode**, the agent uses embeddings to measure how close each paper's title and abstract are to your brief in meaning and keeps the top 150 as candidates.
@@ -868,7 +868,7 @@ def main():
             height=200,
             help="Describe your research interest in natural language. Focus on what the main contribution "
                  "of the papers should be. If you leave this and the next box empty, the agent will perform "
-                 "a global digest of recent cs.AI, cs.LG, and cs.HC papers."
+                 "a global digest of recent Computer Science papers."
         )
 
         not_looking_for = st.text_area(
@@ -917,8 +917,8 @@ def main():
 
         main_cat = st.selectbox(
             "Main category",
-            ["All"] + list(ARXIV_CATEGORIES.keys()),
-            index=1  # default to "Computer Science" (change if you want)
+            list(ARXIV_CATEGORIES.keys()),
+            index=0  # default to "Computer Science"
         )
 
         if main_cat == "All":
